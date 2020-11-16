@@ -24,7 +24,7 @@ class TagFactory extends Factory
         static $number = 1;
         
         return [
-            'title' => 'Ingredient ' . $number++,
+            'title' => 'Tag ' . $number++,
             'slug' => $this->faker->unique()->slug,
         ];
     }
