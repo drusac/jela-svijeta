@@ -17,7 +17,7 @@ class CreateTagsTable extends Migration
             $table->id();
             $table->foreignId('meal_id')->constrained()->onDelete('cascade');
             $table->string('title', 50);
-            $table->string('slug', 50);
+            $table->string('slug', 200)->unique();
             $table->timestamps();
         });
     }
