@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MealOptions extends FormRequest
@@ -29,6 +30,8 @@ class MealOptions extends FormRequest
             'category_id' => ['nullable', 'min:1', 'integer', 'exists:categories,id'],
             'tag_ids' => ['array'],
             'tag_ids.*' => ['integer', 'distinct', 'exists:tags,id'],
+            'with' => ['array'],
+            'with.*' => [Rule::in(['category', 'tags', 'ingredients'])],
         ];
     }
 }

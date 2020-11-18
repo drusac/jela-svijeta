@@ -30,6 +30,11 @@ class Meal extends Model
         return $this->hasMany(Tag::class);
     }
 
+    public function scopeEagerLoad($query, $relationships = [])
+    {
+        return empty($relationships) ? $query : $query->with($relationships);
+    }
+    
     public function scopeWhereCategory($query, $category_id)
     {
         return !$category_id ? $query : $query->where('category_id', $category_id);
