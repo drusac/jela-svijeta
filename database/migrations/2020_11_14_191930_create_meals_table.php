@@ -18,7 +18,7 @@ class CreateMealsTable extends Migration
             $table->foreignId('category_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('title', 50);
             $table->string('description', 2000);
-            $table->string('status', 30)->default('created');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

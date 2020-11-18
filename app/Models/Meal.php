@@ -3,17 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Meal extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
-
-    protected $attributes = [
-        'status' => 'created',
-    ];
 
     public function category()
     {
@@ -30,11 +27,21 @@ class Meal extends Model
         return $this->hasMany(Tag::class);
     }
 
+    public function status()
+    {
+        return !request('diff_time') ? 'created' : ($this->deleted_at ? 'deleted' : ($this->created_at == $this->updated_at ? 'created' : 'modified'));
+    }
+
+    public function scopeDiffTime($query, $diff_time)
+    {
+        return !$diff_time ? $query : $query->withTrashed()->where('created_at', '>=', date("Y-m-d\TH:i:s\Z", $diff_time));
+    }
+
     public function scopeEagerLoad($query, $relationships = [])
     {
         return empty($relationships) ? $query : $query->with($relationships);
     }
-    
+
     public function scopeWhereCategory($query, $category_id)
     {
         return !$category_id ? $query : $query->where('category_id', $category_id);

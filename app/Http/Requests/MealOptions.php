@@ -32,6 +32,7 @@ class MealOptions extends FormRequest
             'tag_ids.*' => ['integer', 'distinct', 'exists:tags,id'],
             'with' => ['array'],
             'with.*' => [Rule::in(['category', 'tags', 'ingredients'])],
+            'diff_time' => ['nullable', 'integer', 'min:1'],
         ];
     }
 }

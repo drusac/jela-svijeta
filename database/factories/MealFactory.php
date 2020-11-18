@@ -22,11 +22,14 @@ class MealFactory extends Factory
     public function definition()
     {
         static $number = 1;
+        $statusCreatedRecords = $this->faker->dateTimeInInterval('-10 years', '+ 5 days');
 
         return [
             'title' => 'Meal ' . $number++,
             'description' => $this->faker->paragraph(3),
-            'status' => $this->faker->randomElement(['created', 'modified', 'deleted']),
+            'deleted_at' => $this->faker->randomElement([$this->faker->dateTimeThisYear(), null]),
+            'created_at' => $this->faker->randomElement([$statusCreatedRecords]),
+            'updated_at' => $this->faker->randomElement([$this->faker->dateTimeInInterval('-5 years', '+ 5 days'), $statusCreatedRecords]),
         ];
     }
 }
