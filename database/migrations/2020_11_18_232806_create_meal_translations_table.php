@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTagsTable extends Migration
+class CreateMealTranslationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('meal_translations', function (Blueprint $table) {
             $table->id();
+            $table->string('locale')->index();
             $table->foreignId('meal_id')->constrained()->onDelete('cascade');
-            // $table->string('title', 50);
-            $table->string('slug', 200)->unique();
-            $table->timestamps();
+            $table->unique(['meal_id', 'locale']);
+            $table->string('title', 50);
+            $table->string('description', 2000);
         });
     }
 
@@ -29,6 +30,6 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('meal_translations');
     }
 }

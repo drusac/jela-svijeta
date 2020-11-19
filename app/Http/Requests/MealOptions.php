@@ -33,6 +33,7 @@ class MealOptions extends FormRequest
             'with' => ['array'],
             'with.*' => [Rule::in(['category', 'tags', 'ingredients'])],
             'diff_time' => ['nullable', 'integer', 'min:1'],
+            'lang' => ['required', Rule::in('en', 'hr')],
         ];
     }
 }

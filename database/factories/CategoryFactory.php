@@ -21,10 +21,13 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
-        static $number = 1;
+        static $number_EN = 1;
+        static $number_HR = 1;
 
         return [
-            'title' => 'Category ' . $number++,
+            'en' => ['title' => 'EN - Category ' . $number_EN++],
+            'hr' => ['title' => 'HR - Kategorija ' . $number_HR++],
+            // 'title' => 'Category ' . $number++,
             'slug' => $this->faker->unique()->slug,
         ];
     }

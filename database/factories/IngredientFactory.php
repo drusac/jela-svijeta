@@ -21,10 +21,13 @@ class IngredientFactory extends Factory
      */
     public function definition()
     {
-        static $number = 1;
+        static $number_EN = 1;
+        static $number_HR = 1;
         
         return [
-            'title' => 'Ingredient ' . $number++,
+            'en' => ['title' => 'EN - Ingredient ' . $number_EN++],
+            'hr' => ['title' => 'HR - Sastojak ' . $number_HR++],
+            // 'title' => 'Ingredient ' . $number++,
             'slug' => $this->faker->unique()->slug,
         ];
     }

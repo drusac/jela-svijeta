@@ -21,10 +21,13 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-        static $number = 1;
-        
+        static $number_EN = 1;
+        static $number_HR = 1;
+
         return [
-            'title' => 'Tag ' . $number++,
+            'en' => ['title' => 'EN - Tag ' . $number_EN++],
+            'hr' => ['title' => 'HR - Oznaka ' . $number_HR++],
+            // 'title' => 'Tag ' . $number++,
             'slug' => $this->faker->unique()->slug,
         ];
     }
