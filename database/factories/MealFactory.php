@@ -35,8 +35,6 @@ class MealFactory extends Factory
                 'title' => 'HR - Jelo ' . $number_HR_title++,
                 'description' => 'HR - Opis ' . $this->faker->paragraph(2),
             ],
-            // 'title' => 'Meal ' . $number_EN_title++,
-            // 'description' => $this->faker->paragraph(3),
             'deleted_at' => $this->faker->randomElement([$this->faker->dateTimeThisYear(), null]),
             'created_at' => $this->faker->randomElement([$statusCreatedRecords]),
             'updated_at' => $this->faker->randomElement([$this->faker->dateTimeInInterval('-5 years', '+ 5 days'), $statusCreatedRecords]),

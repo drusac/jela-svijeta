@@ -27,7 +27,6 @@ class CategoryFactory extends Factory
         return [
             'en' => ['title' => 'EN - Category ' . $number_EN++],
             'hr' => ['title' => 'HR - Kategorija ' . $number_HR++],
-            // 'title' => 'Category ' . $number++,
             'slug' => $this->faker->unique()->slug,
         ];
     }

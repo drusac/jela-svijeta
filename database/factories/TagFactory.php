@@ -27,7 +27,6 @@ class TagFactory extends Factory
         return [
             'en' => ['title' => 'EN - Tag ' . $number_EN++],
             'hr' => ['title' => 'HR - Oznaka ' . $number_HR++],
-            // 'title' => 'Tag ' . $number++,
             'slug' => $this->faker->unique()->slug,
         ];
     }

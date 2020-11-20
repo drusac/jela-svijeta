@@ -16,8 +16,6 @@ class CreateMealsTable extends Migration
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->nullable()->constrained()->onDelete('cascade');
-            // $table->string('title', 50);
-            // $table->string('description', 2000);
             $table->softDeletes();
             $table->timestamps();
         });

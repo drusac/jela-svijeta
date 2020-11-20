@@ -27,7 +27,6 @@ class IngredientFactory extends Factory
         return [
             'en' => ['title' => 'EN - Ingredient ' . $number_EN++],
             'hr' => ['title' => 'HR - Sastojak ' . $number_HR++],
-            // 'title' => 'Ingredient ' . $number++,
             'slug' => $this->faker->unique()->slug,
         ];
     }
