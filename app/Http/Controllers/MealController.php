@@ -24,7 +24,8 @@ class MealController extends Controller
                 ->diffTime($diff_time)
                 ->whereCategory($category_id)
                 ->searchByTagIds($tag_ids)
-                ->paginate($per_page)
+                ->simplePaginate($per_page)
+                // ->paginate($per_page)
         );
     }
 }

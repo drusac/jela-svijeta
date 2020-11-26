@@ -23,12 +23,12 @@ class Meal extends Model implements TranslatableContract
 
     public function ingredients()
     {
-        return $this->hasMany(Ingredient::class);
+        return $this->hasMany(MealIngredient::class);
     }
 
     public function tags()
     {
-        return $this->hasMany(Tag::class);
+        return $this->hasMany(MealTag::class);
     }
 
     public function status()

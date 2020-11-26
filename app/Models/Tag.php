@@ -15,8 +15,8 @@ class Tag extends Model implements TranslatableContract
 
     public $translatedAttributes = ['title'];
 
-    public function meal()
+    public function meals()
     {
-        return $this->belongsTo(Meal::class);
+        return $this->hasMany(MealTag::class);
     }
 }

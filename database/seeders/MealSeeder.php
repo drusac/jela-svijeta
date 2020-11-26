@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tag;
 use App\Models\Meal;
-use App\Models\Ingredient;
+use App\Models\MealTag;
+use App\Models\MealIngredient;
 use Illuminate\Database\Seeder;
 
 class MealSeeder extends Seeder
@@ -16,11 +16,10 @@ class MealSeeder extends Seeder
      */
     public function run()
     {
-        // Seed 5 meals without category
         Meal::factory()
-            ->has(Ingredient::factory()->count(2))
-            ->has(Tag::factory()->count(2))
-            ->count(5)
+            ->has(MealIngredient::factory()->count(3), 'ingredients')
+            ->has(MealTag::factory()->count(3), 'tags')
+            ->count(20)
             ->create();
     }
 }
