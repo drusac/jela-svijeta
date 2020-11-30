@@ -41,27 +41,52 @@ class Meal extends Model implements TranslatableContract
         return !$diff_time ? $query : $query->withTrashed()->where('created_at', '>=', date("Y-m-d\TH:i:s\Z", $diff_time));
     }
 
-    public function scopeEagerLoad($query, $relationships = [])
+    public function scopeEagerLoad($query, $relationships)
     {
-        return empty($relationships) ?
-            $query->with(['translations']) :
-            $query->with(array_merge(
-                    ['translations'],
-                    $relationships,
-                    array_map(function($value) { return $value . '.translations'; }, $relationships)
-                )
-            );
+        // Remove spaces and trailing commas
+        $relationships = rtrim(str_replace(' ', '', $relationships), ',');
+
+        // Relationships filtered array
+        $relationships_array = array_filter(explode(',', $relationships));
+
+        // Relationship translations array
+        $relationship_translations = array_map(function($value) {
+            if ($value == 'category') return 'category.translations';
+            if ($value == 'tags') return 'tags.tag.translations';
+            if ($value == 'ingredients') return 'ingredients.ingredient.translations';
+        }, $relationships_array);
+
+        // Merged array ready for eager load
+        $merged_relationships = array_merge($relationships_array, $relationship_translations);
+
+        return empty($merged_relationships) ? $query : $query->with($merged_relationships);
     }
 
     public function scopeWhereCategory($query, $category_id)
     {
-        return !$category_id ? $query : $query->where('category_id', $category_id);
+        if ($category_id == null) {
+            return $query;
+        } else if ($category_id == 'NULL') {
+            return $query->whereNull('category_id');
+        } else if ($category_id == '!NULL') {
+            return $query->whereNotNull('category_id');
+        } else {
+            return $query->where('category_id', $category_id);
+        }
     }
 
-    public function scopeSearchByTagIds($query, $tag_ids = [])
+    public function scopeSearchByTagIds($query, $tags)
     {
-        return empty($tag_ids) ? $query : $query->whereHas('tags', function ($query) use ($tag_ids) {
-            $query->whereIn('id', $tag_ids);
+        // Remove spaces and trailing commas
+        $tags = rtrim(str_replace(' ', '', $tags), ',');
+
+        // Tags filtered array
+        $tags_array = array_filter(explode(',', $tags));
+
+        return empty($tags_array) ? $query : $query->whereHas('tags', function ($query) use ($tags_array) {
+            $query->whereHas('tag', function ($query) use ($tags_array) {
+                $query->whereIn('id', $tags_array);
+            });
         });
     }
 }

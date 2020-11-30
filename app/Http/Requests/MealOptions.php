@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,14 +25,15 @@ class MealOptions extends FormRequest
      */
     public function rules()
     {
+        $category_ids = Category::pluck('id')->toArray();
+        $category_validation_rules = array_merge($category_ids, ['NULL', '!NULL']);
+
         return [
             'per_page' => ['nullable', 'min:1', 'integer'],
             'page' => ['nullable', 'min:1', 'integer'],
-            'category_id' => ['nullable', 'min:1', 'integer', 'exists:categories,id'],
-            'tag_ids' => ['array'],
-            'tag_ids.*' => ['integer', 'distinct', 'exists:tags,id'],
-            'with' => ['array'],
-            'with.*' => [Rule::in(['category', 'tags', 'ingredients'])],
+            'category_id' => ['nullable', Rule::in($category_validation_rules)],
+            'tags' => ['nullable', 'string'],
+            'with' => ['nullable', 'string'],
             'diff_time' => ['nullable', 'integer', 'min:1'],
             'lang' => ['required', Rule::in('en', 'hr')],
         ];

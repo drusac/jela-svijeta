@@ -16,14 +16,15 @@ class MealController extends Controller
         $relationships = $request->query('with');
         $diff_time = $request->query('diff_time');
         $category_id = $request->query('category_id');
-        $tag_ids = $request->query('tag_ids');
+        $tags = $request->query('tags');
         $per_page = $request->query('per_page');
 
         return MealResource::collection(
-            Meal::eagerLoad($relationships)
+            Meal::withTranslation()
+                ->eagerLoad($relationships)
                 ->diffTime($diff_time)
                 ->whereCategory($category_id)
-                ->searchByTagIds($tag_ids)
+                ->searchByTagIds($tags)
                 ->simplePaginate($per_page)
                 // ->paginate($per_page)
         );
