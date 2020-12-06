@@ -21,7 +21,7 @@ class MealCollection extends JsonResource
             'meta' => [
                 'currentPage' =>  $lengthAwarePaginator->currentPage(),
                 'totalItems' =>  $lengthAwarePaginator->total(),
-                'itemsPerPage' => $lengthAwarePaginator->count(),
+                'itemsPerPage' => intval($lengthAwarePaginator->perPage()),
                 'totalPages' => $lengthAwarePaginator->lastPage(),
             ],
             'data' => MealResource::collection($this->items()),
