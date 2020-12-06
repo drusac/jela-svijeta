@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Meal;
 use App\Http\Requests\MealOptions;
 use Illuminate\Support\Facades\App;
-use App\Http\Resources\MealResource;
+use App\Http\Resources\MealCollection;
 
 class MealController extends Controller
 {
@@ -19,14 +19,24 @@ class MealController extends Controller
         $tags = $request->query('tags');
         $per_page = $request->query('per_page');
 
-        return MealResource::collection(
+        return new MealCollection(
             Meal::withTranslation()
                 ->eagerLoad($relationships)
                 ->diffTime($diff_time)
                 ->whereCategory($category_id)
                 ->searchByTagIds($tags)
-                ->simplePaginate($per_page)
-                // ->paginate($per_page)
+                ->paginate($per_page)
+                ->withQueryString()
         );
+
+        // return MealResource::collection(
+        //     Meal::withTranslation()
+        //         ->eagerLoad($relationships)
+        //         ->diffTime($diff_time)
+        //         ->whereCategory($category_id)
+        //         ->searchByTagIds($tags)
+        //         ->paginate($per_page)
+        //         ->withQueryString()
+        // );
     }
 }
