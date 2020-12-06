@@ -33,7 +33,15 @@ class Meal extends Model implements TranslatableContract
 
     public function status()
     {
-        return !request('diff_time') ? 'created' : ($this->deleted_at ? 'deleted' : ($this->created_at == $this->updated_at ? 'created' : 'modified'));
+        if (!request('diff_time')) {
+            return 'created';
+        } elseif ($this->deleted_at) {
+            return 'deleted';
+        } elseif ($this->created_at == $this->updated_at) {
+            return 'created';
+        } else {
+            return 'modified';
+        }
     }
 
     public function scopeDiffTime($query, $diff_time)

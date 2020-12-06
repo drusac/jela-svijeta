@@ -28,15 +28,5 @@ class MealController extends Controller
                 ->paginate($per_page)
                 ->withQueryString()
         );
-
-        // return MealResource::collection(
-        //     Meal::withTranslation()
-        //         ->eagerLoad($relationships)
-        //         ->diffTime($diff_time)
-        //         ->whereCategory($category_id)
-        //         ->searchByTagIds($tags)
-        //         ->paginate($per_page)
-        //         ->withQueryString()
-        // );
     }
 }
